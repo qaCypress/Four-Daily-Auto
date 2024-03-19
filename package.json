@@ -1,0 +1,20 @@
+{
+  "name": "asd",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {},
+  "author": "asd",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "asd"
+  },
+  "keywords": [
+    "asd"
+  ],
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.42.1",
+    "@types/node": "^20.11.27"
+  }
+}
