@@ -1,0 +1,17 @@
+
+{
+    "slidersAndbuttonsPath":{
+
+    "buttonsPathDesk":["AllRightDeskButton","LuckyBirdDeskButton","Magic365DeskButton","SlotticaDeskButton",
+    "SlottyWayDeskButton","SpinadoDeskButton","SpinambaDeskButton","SpinBountyDeskButton","SuperCatDeskButton","ViksDeskButton"],
+    
+    "sliderPathDesk":["AllRightDeskSlide","LuckyBirdDeskSlide","Magic365DeskSlide","SlotticaDeskSlide",
+    "SlottyWayDeskSlide","SpinadoDeskSlide","SpinambaDeskSlide","SpinBountyDeskSlide","SuperCatDeskSlide","ViksDeskSlide"],
+
+    "buttonsPathMob":["AllRightMobButton","LuckyBirdMobButton","Magic365MobButton","SlotticaMobButton",
+    "SlottyWayMobButton","SpinadoMobButton","SpinambaMobButton","SpinBountyMobButton","SuperCatMobButton","ViksMobButton"],
+    
+    "sliderPathMob":["AllRightMobSlide","LuckyBirdMobSlide","Magic365MobSlide","SlotticaMobSlide",
+    "SlottyWayMobSlide","SpinadoMobSlide","SpinambaMobSlide","SpinBountyMobSlide","SuperCatMobSlide","ViksMobSlide"]
+  }
+}

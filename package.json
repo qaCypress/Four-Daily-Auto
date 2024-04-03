@@ -2,7 +2,11 @@
   "name": "asd",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "SliderDesk": "playwright test tests/4-daily-desk.spec.ts && node parseImage.js",
+    "SliderMob": "playwright test tests/4-daily-mob.spec.ts && node parseImage.js",
+    "test": "parseImage.js"
+  },
   "author": "asd",
   "license": "ISC",
   "repository": {
