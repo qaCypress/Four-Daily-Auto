@@ -28,7 +28,7 @@ const htmlFilePaths = [];
     const type = paths === buttonsPathDesk || paths === buttonsPathMob ? "Button" : "Slider";
 
     paths.forEach(pathProject => {
-      const folderPath = `..\\PlayWright\\ScreenProjects${type}\\${pathProject}`;
+      const folderPath = `..\\Four-Daily-Auto\\ScreenProjects${type}\\${pathProject}`;
 
       if (fs.existsSync(folderPath)) {
 

@@ -47,13 +47,20 @@ async LoginStandart() {
     if(this.DataInter.projectName === "ViksMobSlide")
     {
         await this.page.click('[data-tab="email"]');
+        await this.page.fill(`${this.DataInter.emailFieldLogin}`, this.DataInter.email);
+    await this.page.fill(`${this.DataInter.passwordFieldLogin}`, this.DataInter.password);
+    await this.page.click(this.DataInter.submitButtonLogin);
+    await this.page.waitForNavigation();
+    await this.page.waitForLoadState('networkidle');
     }
+    else{
     await this.page.fill(`${this.DataInter.emailFieldLogin}`, this.DataInter.email);
     await this.page.fill(`${this.DataInter.passwordFieldLogin}`, this.DataInter.password);
     await this.page.click(this.DataInter.submitButtonLogin);
     await this.page.waitForNavigation();
     await this.page.click(this.DataInter.closeIcon);
     await this.page.waitForLoadState('networkidle');
+    }
 } //done
 
 //main function which contains other functions for testing
