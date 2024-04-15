@@ -12,6 +12,9 @@ interface DataSlider {
     countSlickSlide : any;
     slickSlide1 : any;
     slickSlide2 : any;
+    slickSlide3 : any;
+    slickSlide4 : any;
+    slickSlide5 : any;
     slickSlideBunner1 : any;
     slickSlideBunner2 : any;
     slickSlideButton1 : any;
@@ -44,23 +47,31 @@ constructor(DataInter: DataSlider, page : Page, browserParametr: Browser, lang: 
 async LoginStandart() {
     await this.page.setViewportSize({ width: 1920, height: 1080 });
     await this.page.goto(this.DataInter.signInUrl);
-    if(this.DataInter.projectName === "ViksDeskSlide")
-    {
-        await this.page.click('[data-tab="email"]');
-    }
     await this.page.fill(`${this.DataInter.emailFieldLogin}`, this.DataInter.email);
     await this.page.fill(`${this.DataInter.passwordFieldLogin}`, this.DataInter.password);
     await this.page.click(this.DataInter.submitButtonLogin);
     await this.page.waitForNavigation();
     await this.page.click(this.DataInter.closeIcon);
-    await this.page.waitForLoadState('networkidle');
+} //done
+
+async LoginStandartViks() {
+    await this.page.setViewportSize({ width: 1920, height: 1080 });
+    await this.page.goto(this.DataInter.signInUrl);
+    await this.page.click('[data-tab="email"]');
+    await this.page.fill(`${this.DataInter.emailFieldLogin}`, this.DataInter.email);
+    await this.page.fill(`${this.DataInter.passwordFieldLogin}`, this.DataInter.password);
+    await this.page.click(this.DataInter.submitButtonLogin);
+    await this.page.waitForNavigation();
 } //done
 
 //main function which contains other functions for testing
 async ProjectSliderStandart(lang: string) {
 
+    await this.page.waitForLoadState('networkidle');
+
     await this.goToProjectPage(lang);
 
+    await this.page.waitForLoadState('networkidle');
     let totalSliderCount = 0;
     const elementsCount = await this.page.$$eval(`${this.DataInter.countSlickSlide}`, elements => elements.length);
     totalSliderCount += elementsCount;
@@ -70,6 +81,8 @@ async ProjectSliderStandart(lang: string) {
     await this.handleSlide(index, lang);
     await this.handleTextValidation(index, lang);
     await this.handleButtonClick(index, lang, elementsCount);
+    //await this.checkResponse(index, lang);
+    await this.goToProjectPage(lang);
     }
 } //done
 
@@ -77,21 +90,17 @@ async ProjectSliderStandart(lang: string) {
 async goToProjectPage(lang: string) {
     const actions: Record<string, () => void> = {
         ViksDeskSlide: async () => {
-            await this.page.waitForLoadState('networkidle');
             await this.page.goto(`${this.DataInter.signInUrlSimple}${lang}/casino`);
         },
         SuperCatDeskSlide: async () => {
-            await this.page.waitForLoadState('networkidle');
             await this.page.goto(`${this.DataInter.signInUrlSimple}${lang}`);
-            await this.page.waitForTimeout(2000);
+            await this.page.waitForTimeout(1000);
         },
         SpinadoDeskSlide: async () => {
-            await this.page.waitForLoadState('networkidle');
             await this.page.goto(`${this.DataInter.signInUrlSimple}${lang}`);
-            await this.page.waitForTimeout(2000);
+            await this.page.waitForTimeout(1000);
         },
         default: async () => {
-            await this.page.waitForLoadState('networkidle');
             await this.page.goto(`${this.DataInter.signInUrlSimple}${lang}`);
         }
     };
@@ -104,38 +113,43 @@ async goToProjectPage(lang: string) {
 async handleSlide(index: number, lang: string) {
     const slickSlide1 = this.DataInter.slickSlide1;
     const slickSlide2 = this.DataInter.slickSlide2;
+    const slickSlide3 = this.DataInter.slickSlide3;
+    const slickSlide4 = this.DataInter.slickSlide4;
+    const slickSlide5 = this.DataInter.slickSlide5;
+
     const packageName = this.DataInter.packageOverlay;
 
     const actions = {
         SlottyWayDeskSlide: async () => {
             const selectors = [
-                `${slickSlide1}${index}${slickSlide2}`,
-                `#slick-slide-control0${index}`,
-                `#slick-slide-control1${index}`
+                `${slickSlide1}${index}`,
+                `${slickSlide2}${index}`,
+                `${slickSlide3}${index}`,
+                `${slickSlide4}${index}`,
+                `${slickSlide5}${index}`
             ];
             await this.clickFirstFound(selectors, lang);
         },
         SpinambaDeskSlide: async () => {
             const selectors = [
-                `${slickSlide1}${index}${slickSlide2}`,
-                `#slick-slide-control0${index}`,
-                `#slick-slide-control1${index}`,
-                `#slick-slide-control3${index}`
+                `${slickSlide1}${index}`,
+                `${slickSlide2}${index}`,
+                `${slickSlide3}${index}`,
+                `${slickSlide4}${index}`,
+                `${slickSlide5}${index}`
             ];
             await this.clickFirstFound(selectors, lang);
         },
         SuperCatDeskSlide: async () => {
             await this.page.waitForTimeout(1500);
-            await this.page.click(`${slickSlide1}${index + 1}${slickSlide2}`, { force: true });
-            await this.page.waitForTimeout(1500);
+            await this.page.click(`${slickSlide1}${index + 1})`, { force: true });
         },
         SpinadoDeskSlide: async () => {
             await this.page.click(`${slickSlide1}${index}`, { force: true });
-            await this.page.waitForTimeout(2000);
+            await this.page.waitForTimeout(1500);
         },
         default: async () => {
-            await this.page.waitForLoadState('networkidle');
-            await this.page.click(`${slickSlide1}${index}${slickSlide2}`, { force: true });
+            await this.page.click(`${slickSlide1}${index}`, { force: true });
             await this.page.waitForLoadState('networkidle');
         }
     };
@@ -147,10 +161,15 @@ async handleSlide(index: number, lang: string) {
 let elementHandle;
 switch (this.DataInter.projectName) {
     case "LuckyBirdDeskSlide":
-        elementHandle = await this.page.$(packageName);
+    case "SlottyWayDeskSlide":
+    case "SpinambaDeskSlide":
+        elementHandle = await this.page.$(`#banners_slick`);
         break;
     case "SuperCatDeskSlide":
-        elementHandle = await this.page.$(`${packageName}${index}) > div > div > div`);
+        elementHandle = await this.page.$(`#root > main > div.slider`);
+        break;
+        case "SpinadoDeskSlide":
+        elementHandle = await this.page.$(`#banners`);
         break;
     default:
         elementHandle = await this.page.$(`${packageName}${index}`);
@@ -196,40 +215,37 @@ async clickFirstFound(selectors: string[], lang: string) {
 async handleTextValidation(index: number, lang: string) {
     await this.page.waitForLoadState('networkidle');
 
-    const textSelectors = [
-        `${this.DataInter.slickSlideBunner1}${index}${this.DataInter.slickSlideBunner2}`,
-        `#slick-slide0${index} > div > div.overlay > div > div.text > p.desktop.only`,
-        `#slick-slide1${index} > div > div.overlay > div > div.text > p.desktop.only`,
-        `#slick-slide3${index} > div > div.overlay > div > div.text > p.desktop.only`,
-        `${this.DataInter.slickSlideBunner1}${index}${this.DataInter.slickSlideBunner2}`
-    ];
-
-    let textElement;
-    for (const selector of textSelectors) {
-        textElement = await this.page.$(selector);
-        if (textElement) {
-            break;
+    if(this.DataInter.projectName == "SuperCatDeskSlide")
+        {
+            var element = await this.page.$(`.slider-item__header`);
         }
-    }
+        else if(this.DataInter.projectName == "SpinadoDeskSlide") {
+            var element = await this.page.$('div.game_info > div > div');
+        }
+        else{
+            var element = await this.page.$('p.desktop.only');
+        }
 
-    if (!textElement) {
+    if (!element) {
         console.error('Error: Element not found on page');
-        await this.page.goBack();
         return;
     }
 
-    const text = await textElement.textContent();
-    if (!text) {
-        console.error('Error: Failed to get element text');
-        return;
-    }
+    let brElements;
+    if(this.DataInter.projectName == "SuperCatDeskSlide" || this.DataInter.projectName == "SpinadoDeskSlide")
+        {
+    brElements = await element.$$('p');
+        }
+        else{
+    brElements = await element.$$('br');
+        }
 
-    const paragraphCount = text.split('\n').filter(Boolean).length;
+    const brCount = brElements.length;
 
     switch (this.DataInter.projectName) {
         case "SlottyWayDeskSlide":
         case "SpinambaDeskSlide":
-            if (paragraphCount !== this.DataInter.trueNumberSpan) {
+            if (brCount !== this.DataInter.trueNumberSpan) {
                 await this.page.screenshot({
                     path: `ScreenshotsError/${this.DataInter.projectName}_${index}_language_${lang}.png`,
                     fullPage: false,
@@ -238,7 +254,7 @@ async handleTextValidation(index: number, lang: string) {
             }
             break;
         case "SuperCatDeskSlide":
-            if (paragraphCount !== this.DataInter.trueNumberSpan) {
+            if (brCount !== this.DataInter.trueNumberSpan) {
                 await this.page.screenshot({
                     path: `ScreenshotsError/${this.DataInter.projectName}_${index}_language_${lang}.png`,
                     fullPage: false,
@@ -247,7 +263,7 @@ async handleTextValidation(index: number, lang: string) {
             }
             break;
         case "ViksDeskSlide":
-            if (paragraphCount >= 4) {
+            if (brCount !== this.DataInter.trueNumberSpan) {
                 await this.page.screenshot({
                     path: `ScreenshotsError/${this.DataInter.projectName}_${index}_language_${lang}.png`,
                     fullPage: false,
@@ -257,7 +273,7 @@ async handleTextValidation(index: number, lang: string) {
             break;
         case "SpinadoDeskSlide":
         case "SlotticaDeskSlide":
-            if (paragraphCount > 3) {
+            if (brCount !== this.DataInter.trueNumberSpan) {
                 await this.page.screenshot({
                     path: `ScreenshotsError/${this.DataInter.projectName}_${index}_language_${lang}.png`,
                     fullPage: false,
@@ -266,7 +282,7 @@ async handleTextValidation(index: number, lang: string) {
             }
             break;
         default:
-            if (paragraphCount !== this.DataInter.trueNumberSpan) {
+            if (brCount !== this.DataInter.trueNumberSpan) {
                 await this.page.screenshot({
                     path: `ScreenshotsError/${this.DataInter.projectName}_${index}_language_${lang}.png`,
                     fullPage: false,
@@ -277,10 +293,35 @@ async handleTextValidation(index: number, lang: string) {
     }
 } //done
 
+//a function that cheacking status response on page, after redirect on button
+async checkResponse(index: number, lang: string)
+{
+    const response = await this.page.waitForResponse(response => response.status() === 200);
+    if (!response) {
+        await this.page.screenshot({
+            path: `ScreenshotsError/${this.DataInter.projectName}_${index}_language_${lang}.png`,
+            fullPage: false,
+        });
+        throw new Error(`Error: Button response are bad on ${lang} language`);
+      }
+}
+
 //function that clicks on a button on a slider and make screenshots
 async handleButtonClick(index: number, lang: string, elementsCount: number) {
     
     await this.page.waitForLoadState('networkidle');
+
+    if(this.DataInter.projectName == "SuperCatDeskSlide")
+        {
+            await this.page.click(`#root > main > div.slider > div.slick-slider.slick-initialized > div > div > div.slick-slide.slick-active.slick-current > div > div > div > a`);
+        }
+        
+        else if(this.DataInter.projectName == "SpinadoDeskSlide")
+            {
+                await this.page.click(`#slick-slide0${index} > div > div > div.game_info > a.button.big.secondary`);
+            }
+
+        else{
 
     const buttonSelectors = [
         `${this.DataInter.slickSlideButton1}${index} ${this.DataInter.slickSlideButton2}`,
@@ -298,20 +339,29 @@ async handleButtonClick(index: number, lang: string, elementsCount: number) {
             await this.page.waitForLoadState('networkidle');
             break;
         }
-    }
+        else
+        {
 
-    if (!clicked && (this.DataInter.projectName === "SlottyWayDeskSlide" || this.DataInter.projectName === "SpinambaDeskSlide")) {
-        console.log("No button");
+        }
     }
+}
 
     if (index === elementsCount - 1) {
         var elementHandle2 = await this.page.$(`${this.DataInter.buttonTelegram}`);
     } else {
         var elementHandle2 = await this.page.$(`${this.DataInter.buttonReferance}`);
     }
-
+                
     if (elementHandle2) {
-        await this.page.waitForTimeout(800);
+        if(this.DataInter.projectName == "SuperCatDeskSlide")
+            {
+                await this.page.waitForTimeout(2500);
+            }
+            else
+            {
+                await this.page.waitForTimeout(800);
+            }
+        
         const boundingBox = await elementHandle2.boundingBox();
         if (boundingBox) {
             await this.page.screenshot({
@@ -325,9 +375,7 @@ async handleButtonClick(index: number, lang: string, elementsCount: number) {
             });
         }
     }
-
     await this.page.waitForLoadState('networkidle');
-    await this.page.goBack();
 } //done
 
 //a separate function for other sites that uses different logic
