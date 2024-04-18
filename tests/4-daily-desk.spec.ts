@@ -2,7 +2,7 @@ import { test, expect, chromium, Browser} from '@playwright/test';
 import { LoginFixture } from '../login-fixture-desk.ts';
 import { AllRightData, LuckyBirdData, SlotticaData, SlottyWayData, SpinambaData, SpinBountyData, Magic365Data, SuperCatData, ViksData, SpinadoData} from '../4daily-data-desk.json';
 
-test.describe.only('Allright Test Slider and Button', () => {
+test.describe('Allright Test Slider and Button', () => {
     let fixture: LoginFixture;
     let browser: Browser;
     let context;
