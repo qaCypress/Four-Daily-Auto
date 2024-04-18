@@ -71,7 +71,7 @@ async ProjectSliderStandart(lang: string) {
 
     await this.goToProjectPage(lang);
 
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForTimeout(1500);
     let totalSliderCount = 0;
     const elementsCount = await this.page.$$eval(`${this.DataInter.countSlickSlide}`, elements => elements.length);
     totalSliderCount += elementsCount;
@@ -150,7 +150,7 @@ async handleSlide(index: number, lang: string) {
         },
         default: async () => {
             await this.page.click(`${slickSlide1}${index}`, { force: true });
-            await this.page.waitForLoadState('networkidle');
+            await this.page.waitForTimeout(1500);
         }
     };
 
@@ -201,7 +201,7 @@ async clickFirstFound(selectors: string[], lang: string) {
         if (element) {
             await element.click({ force: true });
             clicked = true;
-            await this.page.waitForLoadState('networkidle');
+            await this.page.waitForTimeout(1500);
             break;
         }
     }
@@ -213,7 +213,7 @@ async clickFirstFound(selectors: string[], lang: string) {
 
 //a function that is used in the handleSlide function to check the existence of slickslide elements
 async handleTextValidation(index: number, lang: string) {
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForTimeout(1500);
 
     if(this.DataInter.projectName == "SuperCatDeskSlide")
         {
@@ -309,7 +309,7 @@ async checkResponse(index: number, lang: string)
 //function that clicks on a button on a slider and make screenshots
 async handleButtonClick(index: number, lang: string, elementsCount: number) {
     
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForTimeout(1500);
 
     if(this.DataInter.projectName == "SuperCatDeskSlide")
         {
@@ -336,7 +336,7 @@ async handleButtonClick(index: number, lang: string, elementsCount: number) {
         if (element) {
             await element.click({ force: true });
             clicked = true;
-            await this.page.waitForLoadState('networkidle');
+            await this.page.waitForTimeout(1500);
             break;
         }
         else
@@ -375,12 +375,12 @@ async handleButtonClick(index: number, lang: string, elementsCount: number) {
             });
         }
     }
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForTimeout(1500);
 } //done
 
 //a separate function for other sites that uses different logic
 async ProjectSliderSpinBountyAndMagic(lang: string) {
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForTimeout(1500);
     await this.page.goto(`${this.DataInter.signInUrlSimple}${lang}`);
 
     const elements = await this.page.$$(`${this.DataInter.countSlickSlide}`);
@@ -391,7 +391,7 @@ async ProjectSliderSpinBountyAndMagic(lang: string) {
             element.scrollTo(currentScrollLeft, 0);
         }, index * scrollDistance);
         
-        await this.page.waitForLoadState('networkidle');
+        await this.page.waitForTimeout(1500);
 
         const elementHandle = await this.page.$(`${this.DataInter.packageOverlay}`);
         if (elementHandle) {
@@ -405,7 +405,7 @@ async ProjectSliderSpinBountyAndMagic(lang: string) {
         }
 
         await this.page.click(`${this.DataInter.slickSlideButton1}${index + 1}${this.DataInter.slickSlideButton2}`, { force: true });
-        await this.page.waitForLoadState('networkidle');
+        await this.page.waitForTimeout(1500);
 
         const elementHandle2 = await this.page.$(index === elements.length - 1 ? `${this.DataInter.buttonTelegram}` : `${this.DataInter.buttonReferance}`);
         if (elementHandle2) {
